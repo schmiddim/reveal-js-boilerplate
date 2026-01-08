@@ -1,7 +1,7 @@
 {
   "name": "presentation",
   "version": "1.0.0",
-  "description": "",
+  "description": "``` make install ``` ``` make serve ```",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,5 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "reveal.js": "^5.2.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schmiddim/reveal-js-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/schmiddim/reveal-js-boilerplate/issues"
+  },
+  "homepage": "https://github.com/schmiddim/reveal-js-boilerplate#readme"
 }

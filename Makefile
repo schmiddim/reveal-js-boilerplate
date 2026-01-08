@@ -25,10 +25,8 @@ install:
 		echo "✅ reveal.js already installed"; \
 	fi
 
-serve:
+serve: install
 	@echo "▶ Starting local server on $(URL)"
-	@python -m http.server $(PORT) & \
-	SERVER_PID=$$!; \
-	sleep 1; \
-	xdg-open "$(URL)" >/dev/null 2>&1 || true; \
-	wait $$SERVER_PID
+	@command -v xdg-open >/dev/null 2>&1 || { echo "❌ xdg-open not found"; exit 1; }
+	@(sleep 1; xdg-open "$(URL)" >/dev/null 2>&1 || true) & \
+	npx serve . -l $(PORT)
