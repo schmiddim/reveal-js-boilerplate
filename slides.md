@@ -9,7 +9,8 @@ func main() {
 	fmt.Println("Hello, world!")
 }
 ```
-
+Note:
+Hello World example
 ---
 
 ## Mermaid Diagram
@@ -21,6 +22,8 @@ graph TD;
   B -->|No| D[Stop];
 </div>
 
+Node: 
+A nice Mermaid diagram
 ---
 
 # Mein Vortrag

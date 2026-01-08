@@ -6,7 +6,7 @@
   "scripts": {
     "build": "esbuild src/main.js --bundle --minify --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file",
     "dev": "esbuild src/main.js --bundle --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --watch",
-    "serve": "concurrently -k \"npm run dev\" \"live-server --port=8000 --open=./index.html\"",
+    "serve": "concurrently -k \"npm run dev\" \"wait-on dist/bundle.js dist/bundle.css && live-server --port=${PORT:-8000} --open=./index.html\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,7 +19,8 @@
   "devDependencies": {
     "concurrently": "^9.1.0",
     "esbuild": "^0.24.0",
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "wait-on": "^7.2.0"
   },
   "repository": {
     "type": "git",
