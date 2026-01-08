@@ -8,7 +8,7 @@ URL  := http://localhost:$(PORT)
 help:
 	@echo ""
 	@echo "Usage:"
-	@echo "  make install   Install reveal.js via npm"
+	@echo "  make install   Install dependencies and build bundle"
 	@echo "  make serve     Start local HTTP server and open browser"
 	@echo ""
 
@@ -17,16 +17,12 @@ install:
 	@command -v node >/dev/null 2>&1 || { echo "❌ node not found"; exit 1; }
 	@command -v npm  >/dev/null 2>&1 || { echo "❌ npm not found";  exit 1; }
 
-	@if [ ! -d node_modules/reveal.js ]; then \
-		echo "▶ Installing reveal.js"; \
-		npm init -y >/dev/null 2>&1 || true; \
-		npm install reveal.js; \
-	else \
-		echo "✅ reveal.js already installed"; \
-	fi
+	@echo "▶ Installing npm dependencies"
+	@npm install
+	@echo "▶ Building bundle"
+	@npm run build
 
 serve: install
-	@echo "▶ Starting local server on $(URL)"
+	@echo "▶ Starting dev server with hot reload on $(URL)"
 	@command -v xdg-open >/dev/null 2>&1 || { echo "❌ xdg-open not found"; exit 1; }
-	@(sleep 1; xdg-open "$(URL)" >/dev/null 2>&1 || true) & \
-	npx serve . -l $(PORT)
+	@PORT=$(PORT) npm run serve

@@ -4,13 +4,22 @@
   "description": "``` make install ``` ``` make serve ```",
   "main": "index.js",
   "scripts": {
+    "build": "esbuild src/main.js --bundle --minify --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file",
+    "dev": "esbuild src/main.js --bundle --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --watch",
+    "serve": "concurrently -k \"npm run dev\" \"live-server --port=8000 --open=./index.html\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mermaid": "^10.9.1",
     "reveal.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "esbuild": "^0.24.0",
+    "live-server": "^1.2.2"
   },
   "repository": {
     "type": "git",

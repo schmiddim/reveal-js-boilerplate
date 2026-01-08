@@ -4,12 +4,7 @@
     <meta charset="utf-8">
     <title>Reveal.js Markdown Talk</title>
 
-    <!-- Core styles -->
-    <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
-    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/black.css">
-
-    <!-- Code highlighting -->
-    <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="dist/bundle.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -28,23 +23,7 @@
     </div>
 </div>
 
-<!-- reveal core -->
-<script src="node_modules/reveal.js/dist/reveal.js"></script>
-
-<!-- plugins -->
-<script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
-<script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
-<script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
-
-<script>
-    Reveal.initialize({
-        hash: true,
-        slideNumber: true,
-        controls: true,
-        progress: true,
-        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-    });
-</script>
+<script src="dist/bundle.js"></script>
 
 </body>
 </html>
