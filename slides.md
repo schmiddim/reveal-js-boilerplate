@@ -135,7 +135,7 @@ Note:
 This function is the Operator. Everything else is scaffolding.
 ---
 
-### 🤞 Demo 🤞
+### Demo
 Note:
 Switch to terminal.
 Explain as little as possible.
