@@ -1,67 +1,149 @@
-## Go Hello World
+## When to Write a Kubernetes Operator  
+### and How to Do It Right
 
+---
+## The trap
+> “Writing a Kubernetes Operator sounds great…”
+
+…but often:
+- YAML would have been enough
+- complexity sneaks in
+- maintenance cost explodes
+
+Note:
+Set expectations. This is a warning, not a sales pitch.
+---
+
+## So when *does* an Operator make sense?
+
+When you need:
+- relationships between resources
+- invariants (“if X exists, Y must exist”)
+- lifecycle & cleanup
+- continuous enforcement
+
+Note:
+This is the core decision slide.
+---
+
+## When you *don’t* need one
+
+If it’s:
+- static resources
+- one-off generation
+- simple templating
+
+➡️ **Just use YAML.**
+
+Note:
+Say this explicitly. It builds trust.
+
+---
+
+### What an Operator really is
+### No magic. Just a loop.
+<div class="mermaid">
+graph TD;
+  DS[Desired State] --> RL[Reconcile];
+  RL --> AS[Actual State];
+  AS --> ST[Status];
+  ST --> DS;
+</diV>
+Note:
+Keep it high-level.
+No controller-runtime internals.
+---
+## What makes a good Operator
+
+- simple reconciliation logic
+- idempotent behavior
+- clear, meaningful status
+- boring, predictable outcomes
+
+Note:
+“Boring” is a feature.
+---
+### What the Operator does not do
+
+- no workflows
+
+- no step-by-step logic
+
+- no hidden state
+
+### It only:
+
+- reads the world
+
+- enforces a contract
+
+Note:
+This separates Operators from scripts.
+
+---
+## The line to draw
+- one resource → YAML
+- relationships → Operator
+- time / lifecycle / invariants → Operator
+
+Note:
+This answers the CFP (Call for Paper) promise directly.
+
+“Here’s the line I try to draw.
+If you’re managing a single resource, YAML is great.
+
+The moment you introduce relationships between resources —
+‘if this exists, that must exist too’ — YAML starts to hurt.
+
+And as soon as time, lifecycle, or invariants are involved,
+you’re already writing an Operator — just not in the cluster yet.
+
+---
+#### Let's scaffold an operator...
+
+
+```shell
+operator-sdk init --domain "$DOMAIN" --repo "$REPO"
+```  
+
+Note:
+This just creates the skeleton — no logic yet.
+---
+### ... And Create a Resources and a Controller
+```shell
+operator-sdk create api \
+  --group kitchen \
+  --version v1alpha1 \
+  --kind Teapot \
+  --resource \
+  --controller
+```
+
+Note:
+From here on, everything interesting happens in code.
+---
+### Reconcile is the Operator
 ```go
-package main
-
-import "fmt"
-// the main function 
-func main() {
-	fmt.Println("Hello, world!")
+func (r *TeapotReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+    // read current state
+    // check dependencies
+    // update status
+    return ctrl.Result{}, nil
 }
 ```
 Note:
-Hello World example
+This function is the Operator. Everything else is scaffolding.
 ---
 
-## Mermaid Diagram
-
-<div class="mermaid">
-graph TD;
-  A[Start] --> B{Decision};
-  B -->|Yes| C[Do thing];
-  B -->|No| D[Stop];
-</div>
-
-Node: 
-A nice Mermaid diagram
----
-
-# Mein Vortrag
-### reveal.js · Markdown · NixOS
-
+### 🤞 Demo 🤞
 Note:
-Begrüßung
-Kurz erklären, dass alles aus Markdown kommt.
+Switch to terminal.
+Explain as little as possible.
+Let status speak.
 
 ---
-
-## Agenda
-- Motivation
-- Setup
-- Demo
-- Fazit
-
-Note:
-Agenda kurz durchgehen, nicht ins Detail.
-
----
-
-## Motivation
-Warum diese Lösung?
-
-- reproduzierbar
-- leichtgewichtig
-- versionierbar
-- kein PowerPoint 😉
-
-Note:
-Bezug auf NixOS / Dev-Workflows herstellen.
-
----
-
-## Setup (kurz)
-
-```bash
-nix-shell -p nodejs
-npm install reveal.js
-python -m http.server
+## Takeaways
+- Operators are powerful - and expensive
+- Write them - and code in general - rarely
+- Keep them small
+- Make status your UX

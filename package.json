@@ -6,8 +6,7 @@
   "scripts": {
     "build": "esbuild src/main.js --bundle --minify --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file",
     "dev": "esbuild src/main.js --bundle --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --watch",
-    "serve": "concurrently -k \"npm run dev\" \"wait-on dist/bundle.js dist/bundle.css && live-server --port=${PORT:-8000} --open=./index.html\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "concurrently -k \"npm run dev\" \"wait-on dist/bundle.js dist/bundle.css && live-server --port=${PORT:-8000} --open=./index.html\""
   },
   "keywords": [],
   "author": "",
