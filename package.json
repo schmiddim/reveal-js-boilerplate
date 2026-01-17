@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
+    "decktape": "^3.13.0",
     "esbuild": "^0.24.0",
     "live-server": "^1.2.2",
     "wait-on": "^7.2.0"

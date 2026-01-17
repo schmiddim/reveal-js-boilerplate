@@ -3,26 +3,27 @@ PORT ?= 8000
 URL  := http://localhost:$(PORT)
 
 .DEFAULT_GOAL := help
-.PHONY: help install serve
+.PHONY: help install serve pdf
 
 help:
 	@echo ""
 	@echo "Usage:"
 	@echo "  make install   Install dependencies and build bundle"
 	@echo "  make serve     Start local HTTP server and open browser"
+	@echo "  make pdf       Generate slides.pdf from presentation"
 	@echo ""
 
 install:
-	@echo "▶ Checking requirements"
-	@command -v node >/dev/null 2>&1 || { echo "❌ node not found"; exit 1; }
-	@command -v npm  >/dev/null 2>&1 || { echo "❌ npm not found";  exit 1; }
-
-	@echo "▶ Installing npm dependencies"
 	@npm install
-	@echo "▶ Building bundle"
 	@npm run build
 
 serve: install
-	@echo "▶ Starting dev server with hot reload on $(URL)"
-	@command -v xdg-open >/dev/null 2>&1 || { echo "❌ xdg-open not found"; exit 1; }
 	@PORT=$(PORT) npm run serve
+
+pdf: install
+	@PORT=$(PORT) npm run serve > /dev/null 2>&1 &
+	@SERVER_PID=$$!; \
+	sleep 6; \
+	npx decktape --pause 500 generic $(URL)/index.html slides.pdf; \
+	kill $$SERVER_PID 2>/dev/null || true; \
+	echo "✓ PDF generated: slides.pdf"
