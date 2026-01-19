@@ -154,3 +154,12 @@ Note:
 - Write them - and code in general - rarely
 - Keep them small
 - Make status your UX
+---
+## Links
+<img src="assets/qrcode.svg" width="250" alt="QR Code">
+
+- [Presentation](https://github.com/schmiddim/reveal-js-boilerplate/blob/master/slides.pdf)
+- [Golang](https://go.dev/doc/install) 
+- [Operator SDK](https://sdk.operatorframework.io/)
+- [Tea Pot Operator](https://github.com/schmiddim/teapot-operator) 
+- [My LinkedIn](https://www.linkedin.com/in/michael-schmitt-ist-cool/) 
