@@ -137,9 +137,13 @@ This function is the Operator. Everything else is scaffolding.
 
 ### Demo
 - Show YAML first
-- kubectl delete  tea,teapot,water --all
+- kubectl delete  leave,teapot,water --all
 - apply teapot without operator
 - start operator add rest
+- curl -w "\nStatus: %{http_code}\n" localhost:8082
+- k8s-port-forward.sh
+
+
 
 
 ---
