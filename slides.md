@@ -53,7 +53,7 @@ Note:
 Keep it high-level.
 No controller-runtime internals.
 ---
-## What makes a good Operator
+## What makes a good Operator?
 
 - simple reconciliation logic
 - idempotent behavior
@@ -71,7 +71,7 @@ Note:
 
 - no hidden state
 
-### It only:
+**It only:**
 
 - reads the world
 
@@ -82,9 +82,13 @@ This separates Operators from scripts.
 
 ---
 ## The line to draw
-- one resource → YAML
-- relationships → Operator
-- time / lifecycle / invariants → Operator
+**You declare**
+- What you want with YAML
+
+**The Operator handles**
+- All relationships
+- Complete Lifecycle
+- Keeps everything in desired state
 
 Note:
 This answers the CFP (Call for Paper) promise directly.

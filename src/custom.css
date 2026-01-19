@@ -2,3 +2,20 @@
     font-size: 0.65em;
     line-height: 1.45;
 }
+
+/* Text linksbündig, Überschriften zentriert */
+.reveal .slides section {
+    text-align: left;
+}
+
+.reveal .slides h1,
+.reveal .slides h2,
+.reveal .slides h3,
+.reveal .slides h4 {
+    text-align: center;
+}
+
+/* Mermaid Diagramme zentrieren */
+.reveal .mermaid {
+    text-align: center;
+}
