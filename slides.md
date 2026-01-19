@@ -136,10 +136,11 @@ This function is the Operator. Everything else is scaffolding.
 ---
 
 ### Demo
-Note:
-Switch to terminal.
-Explain as little as possible.
-Let status speak.
+- Show YAML first
+- kubectl delete  tea,teapot,water --all
+- apply teapot without operator
+- start operator add rest
+
 
 ---
 ## Takeaways
