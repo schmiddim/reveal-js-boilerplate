@@ -100,8 +100,11 @@ you’re already writing an Operator — just not in the cluster yet.
 
 ---
 #### Let's scaffold an operator...
-
-
+1. Install Go
+2. Install a Kubernetes Distribution
+3. Get the Operator SDK
+---
+#### Let's scaffold an operator...
 ```shell
 operator-sdk init --domain "$DOMAIN" --repo "$REPO"
 ```  
@@ -136,16 +139,15 @@ This function is the Operator. Everything else is scaffolding.
 ---
 
 ### Demo
+
+
+Note:
 - Show YAML first
 - kubectl delete  leave,teapot,water --all
 - apply teapot without operator
 - start operator add rest
 - curl -w "\nStatus: %{http_code}\n" localhost:8082
 - k8s-port-forward.sh
-
-
-
-
 ---
 ## Takeaways
 - Operators are powerful - and expensive
