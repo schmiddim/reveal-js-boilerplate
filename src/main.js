@@ -1,5 +1,5 @@
 import "reveal.js/dist/reveal.css";
-import "reveal.js/dist/theme/dracula.css";
+import "reveal.js/dist/theme/black.css";
 import "reveal.js/plugin/highlight/monokai.css";
 import "./custom.css";
 import Reveal from "reveal.js";
@@ -16,7 +16,7 @@ Reveal.initialize({
   plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
 });
 
-mermaid.initialize({ startOnLoad: false, theme: "dark" });
+mermaid.initialize({ startOnLoad: false, theme: "black" });
 
 const getMermaidNodes = (scope) =>
   Array.from(scope.querySelectorAll(".mermaid"));

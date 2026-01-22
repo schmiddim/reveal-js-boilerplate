@@ -43,12 +43,29 @@ Say this explicitly. It builds trust.
 ### What an Operator really is
 ### No magic. Just a loop.
 <div class="mermaid">
+%%{init: {'flowchart': {'htmlLabels': true}, 'theme': 'dark', 'themeVariables': {'lineColor': '#60D7FF', 'primaryColor': '#1a1a2e', 'primaryTextColor': '#fff', 'primaryBorderColor': '#60D7FF', 'fontSize': '16px'}, 'fontFamily': 'arial'}}%%
 graph TD;
-  DS[Desired State] --> RL[Reconcile];
-  RL --> AS[Actual State];
-  AS --> ST[Status];
-  ST --> DS;
-</diV>
+  DS["<b>Desired State</b>"] --> |"check"| RL["<b>Reconcile</b>"];
+  RL --> |"observe"| AS["<b>Actual State</b>"];
+  AS --> |"report"| ST["<b>Status</b>"];
+  ST -.->|"loop"| DS;
+  
+  style DS fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
+  style RL fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
+  style AS fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
+  style ST fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
+</div>
+
+<style>
+.mermaid .edgeLabel {
+  padding: 4px 10px !important;
+  background: #3a3a5e !important;
+  border-radius: 4px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+</style>
 Note:
 Keep it high-level.
 No controller-runtime internals.
@@ -110,7 +127,7 @@ you’re already writing an Operator — just not in the cluster yet.
 ---
 #### Let's scaffold an operator...
 ```shell
-operator-sdk init --domain "$DOMAIN" --repo "$REPO"
+operator-sdk init --domain "$DOMAIN" --repo "$REPO"F
 ```  
 
 Note:
