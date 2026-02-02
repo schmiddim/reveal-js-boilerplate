@@ -127,13 +127,13 @@ you’re already writing an Operator — just not in the cluster yet.
 ---
 #### Let's scaffold an operator...
 ```shell
-operator-sdk init --domain "$DOMAIN" --repo "$REPO"F
+operator-sdk init --domain "$DOMAIN" --repo "$REPO"
 ```  
 
 Note:
 This just creates the skeleton — no logic yet.
 ---
-### ... And Create a Resources and a Controller
+### ... And Create a Resource and a Controller
 ```shell
 operator-sdk create api \
   --group kitchen \
@@ -169,6 +169,12 @@ Note:
 - start operator add rest
 - curl -w "\nStatus: %{http_code}\n" localhost:8082
 - k8s-port-forward.sh
+
+code demo
+
+- tepot_types.go
+- api versioning
+
 ---
 ## Takeaways
 - Operators are powerful - and expensive
