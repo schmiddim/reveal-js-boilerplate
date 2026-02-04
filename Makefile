@@ -1,6 +1,7 @@
 SHELL := /usr/bin/env bash
 PORT ?= 8000
 URL  := http://localhost:$(PORT)
+CHROME := $(shell which google-chrome-stable)
 
 .DEFAULT_GOAL := help
 .PHONY: help install serve pdf
@@ -24,6 +25,6 @@ pdf: install
 	@PORT=$(PORT) npm run serve > /dev/null 2>&1 &
 	@SERVER_PID=$$!; \
 	sleep 6; \
-	npx decktape --pause 500 generic $(URL)/index.html slides.pdf; \
+	PUPPETEER_EXECUTABLE_PATH=$(CHROME) npx decktape --pause 500 generic $(URL)/index.html slides.pdf; \
 	kill $$SERVER_PID 2>/dev/null || true; \
 	echo "✓ PDF generated: slides.pdf"
