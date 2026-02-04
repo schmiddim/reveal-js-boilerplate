@@ -1,19 +1,19 @@
 ## When to Write a Kubernetes Operator  
 ### and How to Do It Right
-
+#### (featuring: tea)
 ---
 ## The trap
-> “Writing a Kubernetes Operator sounds great…”
+### “Writing a Kubernetes Operator sounds great…”
 
-…but often:
-- YAML would have been enough
-- complexity sneaks in
-- maintenance cost explodes
+> …until you have to maintain it.
 
 Note:
-Set expectations. This is a warning, not a sales pitch.
----
+- writing is the easy part
+- some weeks later: go dependencies, security updates, 
+- 3 times a year: Kubernetes API deprecations
+- 2 years later: "what does this method do?"
 
+---
 ## So when *does* an Operator make sense?
 
 When you need:
@@ -23,9 +23,19 @@ When you need:
 - continuous enforcement
 
 Note:
-This is the core decision slide.
----
+**relationships**
+- If I deploy a teapot, I also need water 
+- YAML can't express that - you'd need a human or a script
+ 
+**invariants**
+- "these two things must always exist together"
+- if someone deletes one, the other should go too - or be recreated
 
+**continuous enforcement**
+- not "run once and done"
+- someone deletes your ConfigMap? Operator recreates it
+- drift correction, constantly
+---
 ## When you *don’t* need one
 
 If it’s:
@@ -36,39 +46,52 @@ If it’s:
 ➡️ **Just use YAML.**
 
 Note:
-Say this explicitly. It builds trust.
+**static resources**
+- Deployment, Service, ConfigMap that never change
 
+**on-off generation**
+- "generate once, apply, done"
+- Helm template, Kustomize, a shell script
+
+**simple templating**
+- "same thing, different namespace" or "different env vars"
+- that's what Helm values are for
+
+**just use YAML**
+- say it out loud – people need permission to keep it simple
+- "you don't need an Operator for this" builds trust
 ---
-
-### What an Operator really is
-### No magic. Just a loop.
+## No magic. Just a loop.
 <div class="mermaid">
-%%{init: {'flowchart': {'htmlLabels': true}, 'theme': 'dark', 'themeVariables': {'lineColor': '#60D7FF', 'primaryColor': '#1a1a2e', 'primaryTextColor': '#fff', 'primaryBorderColor': '#60D7FF', 'fontSize': '16px'}, 'fontFamily': 'arial'}}%%
-graph TD;
-  DS["<b>Desired State</b>"] --> |"check"| RL["<b>Reconcile</b>"];
-  RL --> |"observe"| AS["<b>Actual State</b>"];
-  AS --> |"report"| ST["<b>Status</b>"];
-  ST -.->|"loop"| DS;
-  
-  style DS fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
-  style RL fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
-  style AS fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
-  style ST fill:#2a2a4e,stroke:#60D7FF,stroke-width:3px,color:#fff
+%%{init: {'theme': 'dark', 'themeVariables': {'fontSize': '28px'}}}%%
+graph TD
+  DS[Desired State] --> R[Reconcile]
+  R --> AS[Actual State]
+  R --> ST[Status]
+  AS -.-> R
 </div>
 
 <style>
-.mermaid .edgeLabel {
-  padding: 4px 10px !important;
-  background: #3a3a5e !important;
-  border-radius: 4px;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+.mermaid .node rect {
+  padding: 20px !important;
+  rx: 5px;
+  ry: 5px;
+}
+.mermaid .nodeLabel {
+  padding: 0 15px !important;
 }
 </style>
 Note:
-Keep it high-level.
-No controller-runtime internals.
+**walk through the diagram**
+- Desired State: what the user wrote in the YAML
+- Reconcile: your code – compares desired vs actual
+- Actual State: what's really in the cluster
+- Status: report back what happened
+
+**the loop**
+- this runs constantly – not once
+- every few seconds, or on every change
+- that's the whole magic: there is none
 ---
 ## What makes a good Operator?
 
@@ -78,7 +101,22 @@ No controller-runtime internals.
 - boring, predictable outcomes
 
 Note:
-“Boring” is a feature.
+**simple reconciliation logic**
+- if you can't explain it in 2 minutes, it's too complex
+- one screen of code, ideally - keep this in mind :-)
+
+**idempotent behavior**
+- run it once, run it 100 times – same result
+- no side effects, no "oops I created 50 ConfigMaps"
+
+**clear, meaningful status**
+- status is your UX – the only thing users see
+- if something breaks, tell them what and why
+
+**boring, predictable outcomes**
+- no surprises
+- Dishwasher
+- "boring" is a feature, not a bug
 ---
 ### What the Operator does not do
 
@@ -89,14 +127,25 @@ Note:
 - no hidden state
 
 **It only:**
-
-- reads the world
-
-- enforces a contract
+- observes
+- corrects
 
 Note:
-This separates Operators from scripts.
+**no workflows**
+- not "first do A, then B, then C"
+- no orchestration, no pipelines
 
+**no step-by-step logic**
+- no "if we already did step 2, skip to step 4"
+- every reconcile starts fresh
+
+**no hidden state**
+- no "remember what we did last time"
+- all state lives in the cluster, not in memory
+
+**observes and corrects**
+- look at desired, look at actual, fix the diff
+- that's it – anything more, and you're building something else
 ---
 ## The line to draw
 **You declare**
@@ -106,24 +155,33 @@ This separates Operators from scripts.
 - All relationships
 - Complete Lifecycle
 - Keeps everything in desired state
+- Tells you when it fails
 
 Note:
-This answers the CFP (Call for Paper) promise directly.
+**you declare what you want**
+- just YAML, nothing else
+- no scripts, no glue code, no "apply in this order"
 
-“Here’s the line I try to draw.
-If you’re managing a single resource, YAML is great.
+**Operator handles the rest**
+- creates dependencies automatically
+- cleans up when parent is deleted
+- corrects drift – someone deletes your ConfigMap? it comes back
 
-The moment you introduce relationships between resources —
-‘if this exists, that must exist too’ — YAML starts to hurt.
-
-And as soon as time, lifecycle, or invariants are involved,
-you’re already writing an Operator — just not in the cluster yet.
-
+**it tells you when it can't deliver**
+- status shows: "I can't create this because X is missing"
+- kubectl describe tells you exactly what's wrong
+- no guessing, no log diving
 ---
 #### Let's scaffold an operator...
 1. Install Go
 2. Install a Kubernetes Distribution
 3. Get the Operator SDK
+
+Note:
+- Get a current version of go
+- Kind, minikube, rancher desktop, colima whatever you have
+- Operator SDK: one binary, that's it
+- you can do this on your laptop in 10 minutes
 ---
 #### Let's scaffold an operator...
 ```shell
@@ -131,7 +189,14 @@ operator-sdk init --domain "$DOMAIN" --repo "$REPO"
 ```  
 
 Note:
-This just creates the skeleton — no logic yet.
+**what this does**
+- creates project structure: main.go, go.mod, Makefile
+- domain: your company/project (e.g. example.com)
+- repo: Go module path
+
+**what you get**
+- boilerplate, nothing interesting yet
+- no CRD, no controller – just scaffolding
 ---
 ### ... And Create a Resource and a Controller
 ```shell
@@ -142,9 +207,20 @@ operator-sdk create api \
   --resource \
   --controller
 ```
-
 Note:
-From here on, everything interesting happens in code.
+**what this creates**
+- CRD: your custom resource definition (Teapot)
+- controller: the reconcile loop that watches it
+
+**the flags**
+- group: API group (kitchen.example.com)
+- version: start with v1alpha1 – you can graduate later
+- kind: your resource name
+- --resource --controller: create both
+
+**now the real work starts**
+- types.go: define your spec and status
+- controller.go: write your reconcile logic
 ---
 ### Reconcile is the Operator
 ```go
@@ -156,7 +232,19 @@ func (r *TeapotReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 }
 ```
 Note:
-This function is the Operator. Everything else is scaffolding.
+**this is it**
+- this function is your entire Operator
+- everything else is scaffolding
+
+**what happens here**
+- read current state: get the Teapot from the cluster
+- check dependencies: does Water exist?
+- update status: tell the world what happened
+
+**return values**
+- ctrl.Result{}: done, wait for next event
+- ctrl.Result{Requeue: true}: run again soon
+- error: something went wrong, retry with backoff
 ---
 
 ### Demo
@@ -178,9 +266,27 @@ code demo
 ---
 ## Takeaways
 - Operators are powerful - and expensive
-- Write them - and code in general - rarely
+- Write them rarely
 - Keep them small
-- Make status your UX
+- Status is your UX
+
+Note:
+**powerful and expensive**
+- they solve real problems
+- but: build time, testing, maintenance for years
+
+**write them rarely**
+- YAML first, Operator only when you hit the wall
+- Operator only when relationships and lifecycle force you
+
+**keep them small**
+- one job, done well
+- if it's growing, split it or rethink it
+
+**status is your UX**
+- the only thing users see
+- "Ready: false, reason: WaterMissing" – that's your error message
+
 ---
 ## Links
 <img src="assets/qrcode.svg" width="250" alt="QR Code">
@@ -189,4 +295,4 @@ code demo
 - [Golang](https://go.dev/doc/install) 
 - [Operator SDK](https://sdk.operatorframework.io/)
 - [Tea Pot Operator](https://github.com/schmiddim/teapot-operator) 
-- [My LinkedIn](https://www.linkedin.com/in/michael-schmitt-ist-cool/) 
+- [LinkedIn](https://www.linkedin.com/in/michael-schmitt-ist-cool/) 
