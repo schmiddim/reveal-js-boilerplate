@@ -2,6 +2,18 @@
 ### and How to Do It Right
 #### (featuring: tea)
 ---
+## About Me
+Michael Schmitt
+
+Sitereliability Engineer at interhyp.de
+
+**Inter***net* **Hyp***othek* (internet mortgage)
+
+
+Note:
+- We help people getting the best interest rates for their mortgage
+- portmanteau word.
+---
 ## The trap
 ### “Writing a Kubernetes Operator sounds great…”
 
@@ -58,8 +70,8 @@ Note:
 - that's what Helm values are for
 
 **just use YAML**
-- say it out loud – people need permission to keep it simple
-- "you don't need an Operator for this" builds trust
+- say it out loud – *people need permission to keep it simple*
+- "you don't need an Operator for this" *builds trust*
 ---
 ## No magic. Just a loop.
 <div class="mermaid">
@@ -224,7 +236,13 @@ Note:
 ---
 ### Reconcile is the Operator
 ```go
-func (r *TeapotReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+package controller
+
+/** ... **/
+
+func (r *TeapotReconciler) Reconcile(
+	    ctx context.Context, 
+		req ctrl.Request) (ctrl.Result, error) {
     // read current state
     // check dependencies
     // update status
@@ -251,17 +269,20 @@ Note:
 
 
 Note:
-- Show YAML first
-- kubectl delete  leave,teapot,water --all
+- Show YAML (water, leafe, teapot)
+- kubectl delete  tealeave,teapot,water --all
 - apply teapot without operator
-- start operator add rest
+- start operator, show state and also deployment and pod
+- add rest
+- show again
 - curl -w "\nStatus: %{http_code}\n" localhost:8082
+- delete deployment, delete teapot
 - k8s-port-forward.sh
 
 code demo
 
-- tepot_types.go
-- api versioning
+- teapot_types.go
+- api versioning  beispiel zucker
 
 ---
 ## Takeaways
@@ -288,7 +309,8 @@ Note:
 - "Ready: false, reason: WaterMissing" – that's your error message
 
 ---
-## Links
+## Thank you :-)
+
 <img src="assets/qrcode.svg" width="250" alt="QR Code">
 
 - [Presentation](https://github.com/schmiddim/reveal-js-boilerplate/blob/master/slides.pdf)
