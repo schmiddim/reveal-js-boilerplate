@@ -130,7 +130,7 @@ Note:
 - Dishwasher
 - "boring" is a feature, not a bug
 ---
-### What the Operator does not do
+## What the Operator does not do
 
 - no workflows
 
@@ -184,7 +184,7 @@ Note:
 - kubectl describe tells you exactly what's wrong
 - no guessing, no log diving
 ---
-#### Let's scaffold an operator...
+## Let's scaffold an operator...
 1. Install Go
 2. Install a Kubernetes Distribution
 3. Get the Operator SDK
@@ -195,7 +195,7 @@ Note:
 - Operator SDK: one binary, that's it
 - you can do this on your laptop in 10 minutes
 ---
-#### Let's scaffold an operator...
+## Let's scaffold an operator...
 ```shell
 operator-sdk init --domain "$DOMAIN" --repo "$REPO"
 ```  
@@ -234,7 +234,7 @@ Note:
 - types.go: define your spec and status
 - controller.go: write your reconcile logic
 ---
-### Reconcile is the Operator
+## Reconcile is the Operator
 ```go
 package controller
 
@@ -265,7 +265,7 @@ Note:
 - error: something went wrong, retry with backoff
 ---
 
-### Demo
+## Demo
 
 
 Note:
