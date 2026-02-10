@@ -28,3 +28,6 @@ pdf: install
 	PUPPETEER_EXECUTABLE_PATH=$(CHROME) npx decktape --pause 500 generic $(URL)/index.html slides.pdf; \
 	kill $$SERVER_PID 2>/dev/null || true; \
 	echo "✓ PDF generated: slides.pdf"
+
+serve: print
+	@PORT=$(PORT) npm run serve:print

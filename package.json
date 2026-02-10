@@ -4,9 +4,12 @@
   "description": "``` make install ``` ``` make serve ```",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild src/main.js --bundle --minify --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file",
-    "dev": "esbuild src/main.js --bundle --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --watch",
-    "serve": "concurrently -k \"npm run dev\" \"wait-on dist/bundle.js dist/bundle.css && live-server --port=${PORT:-8000} --open=./index.html\""
+    "build": "esbuild src/main.js --bundle --minify --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --define:THEME='\"default\"'",
+    "build:print": "esbuild src/main.js --bundle --minify --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --define:THEME='\"print\"'",
+    "dev": "esbuild src/main.js --bundle --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --watch --define:THEME='\"default\"'",
+    "dev:print": "esbuild src/main.js --bundle --sourcemap --outdir=dist --entry-names=bundle --asset-names=assets/[name]-[hash] --loader:.css=css --loader:.eot=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.svg=file --watch --define:THEME='\"print\"'",
+    "serve": "concurrently -k \"npm run dev\" \"wait-on dist/bundle.js dist/bundle.css && live-server --port=${PORT:-8000} --open=./index.html\"",
+    "serve:print": "concurrently -k \"npm run dev:print\" \"wait-on dist/bundle.js dist/bundle.css && live-server --port=${PORT:-8000} --open=./index.html?print-pdf\""
   },
   "keywords": [],
   "author": "",
