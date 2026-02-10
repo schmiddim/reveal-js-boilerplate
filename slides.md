@@ -1,6 +1,9 @@
 ## When to Write a Kubernetes Operator  
 ### and How to Do It Right
 #### (featuring: tea)
+
+Note:
+- with tea
 ---
 ## About Me
 Michael Schmitt
@@ -12,7 +15,7 @@ Sitereliability Engineer at interhyp.de
 
 Note:
 - We help people getting the best interest rates for their mortgage
-- portmanteau word.
+- portmanteau (compound word).
 
 ---
 ## So when *does* an Operator make sense?
@@ -145,7 +148,7 @@ Note:
 - no guessing, no log diving
 ---
 ## Let's scaffold an operator...
-1. Install Go, a Kubernetes Distribution, Get the Operator SDK
+Install Go, a Kubernetes Distribution, Get the Operator SDK
 
 ```shell
 operator-sdk init --domain "$DOMAIN" --repo "$REPO"
@@ -178,7 +181,6 @@ Note:
 
 Note:
 - Show YAML (water, leafe, teapot)
-- kubectl delete  tealeave,teapot,water --all
 - apply teapot without operator
 - start operator, show state and also deployment and pod
 - add rest
@@ -189,8 +191,9 @@ Note:
 
 code demo
 
-- teapot_types.go
-- api versioning  beispiel zucker
+- teapot_types.go: if there's some time
+- api versioning: example: you need sugar, milk and later sweetener + milk alternatives
+- Controller 
 
 ---
 ## Takeaways
