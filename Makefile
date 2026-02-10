@@ -29,5 +29,5 @@ pdf: install
 	kill $$SERVER_PID 2>/dev/null || true; \
 	echo "✓ PDF generated: slides.pdf"
 
-serve: print
+print:
 	@PORT=$(PORT) npm run serve:print
