@@ -13,17 +13,6 @@ Sitereliability Engineer at interhyp.de
 Note:
 - We help people getting the best interest rates for their mortgage
 - portmanteau word.
----
-## The trap
-### “Writing a Kubernetes Operator sounds great…”
-
-> …until you have to maintain it.
-
-Note:
-- writing is the easy part
-- some weeks later: go dependencies, security updates, 
-- 3 times a year: Kubernetes API deprecations
-- 2 years later: "what does this method do?"
 
 ---
 ## So when *does* an Operator make sense?
@@ -130,35 +119,6 @@ Note:
 - Dishwasher
 - "boring" is a feature, not a bug
 ---
-## What the Operator does not do
-
-- no workflows
-
-- no step-by-step logic
-
-- no hidden state
-
-**It only:**
-- observes
-- corrects
-
-Note:
-**no workflows**
-- not "first do A, then B, then C"
-- no orchestration, no pipelines
-
-**no step-by-step logic**
-- no "if we already did step 2, skip to step 4"
-- every reconcile starts fresh
-
-**no hidden state**
-- no "remember what we did last time"
-- all state lives in the cluster, not in memory
-
-**observes and corrects**
-- look at desired, look at actual, fix the diff
-- that's it – anything more, and you're building something else
----
 ## The line to draw
 **You declare**
 - What you want with YAML
@@ -185,32 +145,11 @@ Note:
 - no guessing, no log diving
 ---
 ## Let's scaffold an operator...
-1. Install Go
-2. Install a Kubernetes Distribution
-3. Get the Operator SDK
+1. Install Go, a Kubernetes Distribution, Get the Operator SDK
 
-Note:
-- Get a current version of go
-- Kind, minikube, rancher desktop, colima whatever you have
-- Operator SDK: one binary, that's it
-- you can do this on your laptop in 10 minutes
----
-## Let's scaffold an operator...
 ```shell
 operator-sdk init --domain "$DOMAIN" --repo "$REPO"
 ```  
-
-Note:
-**what this does**
-- creates project structure: main.go, go.mod, Makefile
-- domain: your company/project (e.g. example.com)
-- repo: Go module path
-
-**what you get**
-- boilerplate, nothing interesting yet
-- no CRD, no controller – just scaffolding
----
-### ... And Create a Resource and a Controller
 ```shell
 operator-sdk create api \
   --group kitchen \
@@ -219,54 +158,23 @@ operator-sdk create api \
   --resource \
   --controller
 ```
+
+
 Note:
-**what this creates**
-- CRD: your custom resource definition (Teapot)
-- controller: the reconcile loop that watches it
+- Get a current version of go
+- Kind, minikube, rancher desktop, colima whatever you have
+- Operator SDK: one binary, that's it
+- you can do this on your laptop in 10 minutes
+- **what this does**
+- creates project structure: main.go, go.mod, Makefile
+- domain: your company/project (e.g. example.com)
+- repo: Go module path
 
-**the flags**
-- group: API group (kitchen.example.com)
-- version: start with v1alpha1 – you can graduate later
-- kind: your resource name
-- --resource --controller: create both
-
-**now the real work starts**
-- types.go: define your spec and status
-- controller.go: write your reconcile logic
+**what you get**
+- boilerplate, nothing interesting yet
+- no CRD, no controller – just scaffolding
 ---
-## Reconcile is the Operator
-```go
-package controller
-
-/** ... **/
-
-func (r *TeapotReconciler) Reconcile(
-	    ctx context.Context, 
-		req ctrl.Request) (ctrl.Result, error) {
-    // read current state
-    // check dependencies
-    // update status
-    return ctrl.Result{}, nil
-}
-```
-Note:
-**this is it**
-- this function is your entire Operator
-- everything else is scaffolding
-
-**what happens here**
-- read current state: get the Teapot from the cluster
-- check dependencies: does Water exist?
-- update status: tell the world what happened
-
-**return values**
-- ctrl.Result{}: done, wait for next event
-- ctrl.Result{Requeue: true}: run again soon
-- error: something went wrong, retry with backoff
----
-
 ## Demo
-
 
 Note:
 - Show YAML (water, leafe, teapot)
