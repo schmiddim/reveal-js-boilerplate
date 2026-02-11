@@ -153,7 +153,7 @@ Install Go, a Kubernetes Distribution, Get the Operator SDK
 ```shell
 operator-sdk init --domain "$DOMAIN" --repo "$REPO"
 ```  
-```shell
+```shell [4,5,6]
 operator-sdk create api \
   --group kitchen \
   --version v1alpha1 \
