@@ -1,5 +1,8 @@
 import "reveal.js/dist/reveal.css";
 import "reveal.js/plugin/highlight/monokai.css";
+import "@fontsource/atkinson-hyperlegible/400.css";
+import "@fontsource/atkinson-hyperlegible/400-italic.css";
+import "@fontsource/atkinson-hyperlegible/700.css";
 import "./custom.css";
 
 // Always import black theme as base

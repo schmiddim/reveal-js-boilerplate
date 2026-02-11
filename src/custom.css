@@ -1,3 +1,8 @@
+.reveal {
+    --r-main-font: "Atkinson Hyperlegible", system-ui, sans-serif;
+    --r-heading-font: "Atkinson Hyperlegible", system-ui, sans-serif;
+}
+
 .reveal .slides section {
     text-align: left;
 }

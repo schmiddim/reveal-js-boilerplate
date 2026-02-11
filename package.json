@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fontsource/atkinson-hyperlegible": "^5.2.8",
     "mermaid": "^10.9.1",
     "reveal.js": "^5.2.1"
   },
