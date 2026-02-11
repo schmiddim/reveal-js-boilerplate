@@ -6,7 +6,7 @@ import "@fontsource/atkinson-hyperlegible/700.css";
 import "./custom.css";
 
 // Always import black theme as base
-import "reveal.js/dist/theme/black.css";
+import "reveal.js/dist/theme/white.css";
 
 import Reveal from "reveal.js";
 import RevealMarkdown from "reveal.js/plugin/markdown/markdown.esm.js";

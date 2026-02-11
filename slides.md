@@ -8,9 +8,9 @@ Note:
 ## About Me
 Michael Schmitt
 
-Sitereliability Engineer at interhyp.de
+Sitereliability Engineer at Interhyp
 
-**Inter***net* **Hyp***othek* (internet mortgage)
+https://www.interhyp.de
 
 
 Note:
@@ -67,7 +67,7 @@ Note:
 ---
 ## No magic. Just a loop.
 <div class="mermaid">
-%%{init: {'theme': 'dark', 'themeVariables': {'fontSize': '28px'}}}%%
+%%{init: {'theme': 'white', 'themeVariables': {'fontSize': '28px'}}}%%
 graph TD
   DS[Desired State] --> R[Reconcile]
   R --> AS[Actual State]
@@ -228,4 +228,4 @@ Note:
 - [Golang](https://go.dev/doc/install) 
 - [Operator SDK](https://sdk.operatorframework.io/)
 - [Tea Pot Operator](https://github.com/schmiddim/teapot-operator) 
-- [LinkedIn](https://www.linkedin.com/in/michael-schmitt-ist-cool/) 
+- [My LinkedIn Profile](https://www.linkedin.com/in/michael-schmitt-ist-cool/) 
