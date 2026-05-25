@@ -1,4 +1,4 @@
-import "reveal.js/dist/reveal.css";
+import "reveal.js/reveal.css";
 import "reveal.js/plugin/highlight/monokai.css";
 import "@fontsource/atkinson-hyperlegible/400.css";
 import "@fontsource/atkinson-hyperlegible/400-italic.css";
@@ -6,16 +6,16 @@ import "@fontsource/atkinson-hyperlegible/700.css";
 import "./custom.css";
 
 // Always import black theme as base
-import "reveal.js/dist/theme/white.css";
+import "reveal.js/theme/white.css";
 
 import Reveal from "reveal.js";
-import RevealMarkdown from "reveal.js/plugin/markdown/markdown.esm.js";
-import RevealHighlight from "reveal.js/plugin/highlight/highlight.esm.js";
-import RevealNotes from "reveal.js/plugin/notes/notes.esm.js";
+import RevealMarkdown from "reveal.js/plugin/markdown";
+import RevealHighlight from "reveal.js/plugin/highlight";
+import RevealNotes from "reveal.js/plugin/notes";
 import mermaid from "mermaid";
 
 if (THEME === 'print') {
-  import("reveal.js/dist/theme/white.css");
+  import("reveal.js/theme/white.css");
 }
 
 const showNotes = THEME === 'print' ? "separate-page" : false;
