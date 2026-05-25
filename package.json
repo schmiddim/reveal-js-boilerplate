@@ -24,7 +24,7 @@
     "decktape": "^3.13.0",
     "esbuild": "^0.24.0",
     "live-server": "^1.2.2",
-    "wait-on": "^7.2.0"
+    "wait-on": "^9.0.10"
   },
   "repository": {
     "type": "git",
