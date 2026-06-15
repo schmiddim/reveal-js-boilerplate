@@ -22,7 +22,7 @@
   "devDependencies": {
     "concurrently": "^9.2.1",
     "decktape": "^3.16.1",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "live-server": "^1.2.2",
     "wait-on": "^9.0.10"
   },
